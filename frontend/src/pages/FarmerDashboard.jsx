@@ -241,21 +241,43 @@ const FarmerDashboard = () => {
                             <div className="text-xs text-zinc-500 font-medium">₹{marketData?.recommended_price_quintal}<span className="text-zinc-400">/quintal</span></div>
                         </div>
 
-                        <div className="md:col-span-2 bg-zinc-900 p-6 rounded-3xl text-white space-y-4">
-                            <div className="flex items-center gap-2">
-                                <AlertTriangle className="w-5 h-5 text-amber-400" />
-                                <span className="text-sm font-medium uppercase tracking-widest text-zinc-400">System Alert</span>
-                            </div>
-                            <div className="text-xl font-medium">{marketData?.price_alert}</div>
-                            <div className="flex items-center gap-3 pt-2">
-                                <div className="bg-zinc-800 p-3 rounded-2xl">
-                                    <Sprout className="w-6 h-6 text-emerald-400" />
+                        <div className="md:col-span-2 bg-white p-8 rounded-[2.5rem] border border-zinc-100 shadow-sm space-y-6 flex flex-col justify-between group hover:border-emerald-100 transition-all">
+                            <div className="flex justify-between items-start">
+                                <div className="space-y-1">
+                                    <div className="flex items-center gap-2">
+                                        <TrendingUp className="w-4 h-4 text-emerald-500" />
+                                        <span className="text-[10px] font-black uppercase tracking-widest text-zinc-400">Demand Explorer</span>
+                                    </div>
+                                    <h3 className="text-xl font-bold text-zinc-900 tracking-tight">Market Opportunity</h3>
                                 </div>
-                                <div>
-                                    <div className="text-xs text-zinc-500 uppercase font-bold">Crop Recommendation</div>
-                                    <div className="text-sm">{marketData?.crop_suggestion}</div>
+                                <button 
+                                    onClick={() => navigate('/heatmap')}
+                                    className="bg-zinc-50 p-3 rounded-2xl group-hover:bg-emerald-50 transition-colors"
+                                >
+                                    <Search className="w-5 h-5 text-zinc-400 group-hover:text-emerald-500" />
+                                </button>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="bg-zinc-50 p-4 rounded-2xl border border-zinc-100/50">
+                                    <p className="text-[9px] font-black text-zinc-400 uppercase tracking-widest mb-1">Status</p>
+                                    <p className="text-sm font-bold text-zinc-900 flex items-center gap-1.5">
+                                        <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                        High Demand
+                                    </p>
+                                </div>
+                                <div className="bg-zinc-50 p-4 rounded-2xl border border-zinc-100/50">
+                                    <p className="text-[9px] font-black text-zinc-400 uppercase tracking-widest mb-1">Top Region</p>
+                                    <p className="text-sm font-bold text-zinc-900">Bangalore Kernal</p>
                                 </div>
                             </div>
+
+                            <button 
+                                onClick={() => navigate('/heatmap')}
+                                className="w-full py-3.5 bg-zinc-900 text-white rounded-2xl text-xs font-bold uppercase tracking-widest hover:bg-zinc-800 transition-all shadow-lg shadow-zinc-100"
+                            >
+                                Open Visual Heatmap
+                            </button>
                         </div>
                     </div>
 

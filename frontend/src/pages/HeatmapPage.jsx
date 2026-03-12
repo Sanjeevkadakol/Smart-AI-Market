@@ -115,70 +115,83 @@ const HeatmapPage = () => {
                         </div>
                     </div>
                     
-                    <div className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar">
+                    <div className="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar bg-zinc-50/20">
                         {productList.map((item) => (
                             <div
                                 key={item.name}
                                 onClick={() => setSelectedProduct(item.name)}
                                 className={cn(
-                                    "w-full p-5 rounded-[2rem] flex flex-col gap-4 transition-all group cursor-pointer",
+                                    "w-full p-4 rounded-3xl flex flex-col gap-3 transition-all group cursor-pointer border",
                                     selectedProduct === item.name 
-                                        ? "bg-zinc-950 text-white shadow-2xl scale-[1.02]" 
-                                        : "bg-white border border-zinc-50 hover:bg-zinc-50 text-zinc-700 hover:scale-[1.01]"
+                                        ? "bg-zinc-950 text-white border-zinc-900 shadow-xl" 
+                                        : "bg-white border-zinc-100 hover:border-zinc-200 text-zinc-700"
                                 )}
                             >
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center gap-4">
+                                <div className="flex items-start justify-between">
+                                    <div className="flex items-center gap-3">
                                         <div className={cn(
-                                            "w-10 h-10 rounded-xl flex items-center justify-center transition-transform group-hover:rotate-12",
-                                            selectedProduct === item.name ? "bg-white/10" : "bg-zinc-100"
+                                            "w-9 h-9 rounded-xl flex items-center justify-center",
+                                            selectedProduct === item.name ? "bg-white/10" : "bg-zinc-50"
                                         )}>
                                             {item.highCount > item.medCount ? (
-                                                <TrendingUp className={cn("w-5 h-5", selectedProduct === item.name ? "text-white" : "text-red-500")} />
+                                                <TrendingUp className={cn("w-4 h-4", selectedProduct === item.name ? "text-white" : "text-red-500")} />
                                             ) : (
-                                                <TrendingDown className={cn("w-5 h-5", selectedProduct === item.name ? "text-white" : "text-emerald-500")} />
+                                                <TrendingDown className={cn("w-4 h-4", selectedProduct === item.name ? "text-white" : "text-emerald-500")} />
                                             )}
                                         </div>
                                         <div className="text-left">
                                             <p className="font-black text-sm uppercase tracking-tight">{item.name}</p>
-                                            <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Multi-District Data</p>
+                                            <p className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest opacity-60">Multi-District Data</p>
                                         </div>
                                     </div>
                                     
-                                    <div className="flex gap-1">
+                                    <div className="flex flex-wrap gap-1 justify-end max-w-[100px]">
                                         {item.highCount > 0 && (
-                                            <div className="px-2 py-0.5 rounded-md bg-red-500 text-white text-[8px] font-black uppercase">High</div>
+                                            <div className="px-1.5 py-0.5 rounded-md bg-red-600 text-white text-[7px] font-black uppercase">High</div>
                                         )}
                                         {item.medCount > 0 && (
-                                            <div className="px-2 py-0.5 rounded-md bg-amber-500 text-white text-[8px] font-black uppercase">Mid</div>
+                                            <div className="px-1.5 py-0.5 rounded-md bg-amber-500 text-white text-[7px] font-black uppercase">Mid</div>
                                         )}
                                         {item.lowCount > 0 && (
-                                            <div className="px-2 py-0.5 rounded-md bg-emerald-500 text-white text-[8px] font-black uppercase">Low</div>
+                                            <div className="px-1.5 py-0.5 rounded-md bg-emerald-500 text-white text-[7px] font-black uppercase">Low</div>
                                         )}
                                     </div>
                                 </div>
 
-                                <div className="flex items-center gap-2 pt-2 border-t border-zinc-100/10">
-                                    <div className="flex-1 h-1.5 bg-zinc-100 rounded-full overflow-hidden flex">
-                                        <div style={{ width: `${(item.highCount/item.count)*100}%` }} className="bg-red-500" />
-                                        <div style={{ width: `${(item.medCount/item.count)*100}%` }} className="bg-amber-500" />
-                                        <div style={{ width: `${(item.lowCount/item.count)*100}%` }} className="bg-emerald-500" />
+                                <div className="space-y-1">
+                                    <div className="flex-1 h-1.5 bg-zinc-100/50 rounded-full overflow-hidden flex">
+                                        {item.highCount > 0 && (
+                                            <div style={{ width: `${(item.highCount/item.count)*100}%` }} className="bg-red-500" />
+                                        )}
+                                        {item.medCount > 0 && (
+                                            <div style={{ width: `${(item.medCount/item.count)*100}%` }} className="bg-amber-500" />
+                                        )}
+                                        {item.lowCount > 0 && (
+                                            <div style={{ width: `${(item.lowCount/item.count)*100}%` }} className="bg-emerald-500" />
+                                        )}
                                     </div>
-                                    <span className="text-[9px] font-bold text-zinc-400 whitespace-nowrap">{item.count} Districts</span>
+                                    <div className="flex justify-end">
+                                        <div className="text-[8px] font-bold text-zinc-400 uppercase tracking-tighter">Analyzed in {item.count} Districts</div>
+                                    </div>
                                 </div>
                             </div>
                         ))}
                     </div>
 
-                    <div className="p-6 bg-zinc-50 border-t border-zinc-100">
-                        <div className="flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-zinc-400 mb-4">
-                            <span>Sentiment Legend</span>
-                            <div className="w-1 h-1 bg-zinc-200 rounded-full" />
-                        </div>
-                        <div className="flex gap-4">
-                            <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-red-500" /> <span className="text-[9px] font-bold">Surge</span></div>
-                            <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-amber-500" /> <span className="text-[9px] font-bold">Steady</span></div>
-                            <div className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-500" /> <span className="text-[9px] font-bold">Low</span></div>
+                    <div className="p-6 bg-white border-t border-zinc-50">
+                        <div className="flex justify-between items-center px-2">
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-red-600" /> 
+                                <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Surge</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-amber-500" /> 
+                                <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Steady</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" /> 
+                                <span className="text-[8px] font-black text-zinc-400 uppercase tracking-widest">Low</span>
+                            </div>
                         </div>
                     </div>
                 </div>

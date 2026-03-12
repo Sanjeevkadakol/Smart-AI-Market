@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { ShoppingBag, Search, Filter, Tag, X, TrendingUp, DollarSign, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { useLocation } from 'react-router-dom';
 
 const OfferModal = ({ product, onClose }) => {
     const { user } = useAuth();
@@ -128,6 +129,15 @@ const ConsumerMarketplace = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedProduct, setSelectedProduct] = useState(null);
+    const location = useLocation();
+
+    useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const search = queryParams.get('search');
+        if (search) {
+            setSearchTerm(search);
+        }
+    }, [location.search]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -185,7 +195,6 @@ const ConsumerMarketplace = () => {
                     </div>
                     <button className="bg-white p-2.5 rounded-2xl border border-zinc-100 shadow-sm hover:bg-zinc-50 transition-colors"><Filter className="w-4 h-4 text-zinc-600" /></button>
                 </div>
-
             </header>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

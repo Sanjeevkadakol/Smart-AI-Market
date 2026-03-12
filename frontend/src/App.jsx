@@ -11,6 +11,8 @@ import NegotiationPage from './pages/NegotiationPage';
 import OrdersPage from './pages/OrdersPage';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import NotificationBell from './components/NotificationBell';
+import { VoiceInput } from './components/ui/voice-input';
+import { Mic, Search } from 'lucide-react';
 
 
 
@@ -29,6 +31,7 @@ const ProtectedRoute = ({ children, requiredRole }) => {
 
 const Navigation = () => {
     const { user, logout } = useAuth();
+    const [showVoiceAssistant, setShowVoiceAssistant] = React.useState(false);
 
     return (
         <nav className="relative z-20 border-b border-zinc-100 bg-white/50 backdrop-blur-md px-6 py-4 flex justify-between items-center">
@@ -48,6 +51,13 @@ const Navigation = () => {
                 )}
             </div>
             <div className="flex gap-4 items-center">
+                <button 
+                    onClick={() => setShowVoiceAssistant(!showVoiceAssistant)}
+                    className={`p-2 rounded-full transition-all ${showVoiceAssistant ? 'bg-blue-600 text-white' : 'bg-zinc-100 text-zinc-600 hover:bg-zinc-200'}`}
+                    title="Voice Assistant"
+                >
+                    <Mic className="w-5 h-5" />
+                </button>
                 {user && <NotificationBell />}
                 {user ? (
                     <button onClick={logout} className="bg-zinc-900 text-white px-6 py-2 rounded-full text-sm font-bold hover:bg-zinc-800 transition shadow-md hover:shadow-lg hover:-translate-y-0.5 transform duration-200">Sign Out as {user.role.split('_')[0]}</button>
@@ -59,6 +69,12 @@ const Navigation = () => {
                     </>
                 )}
             </div>
+
+            {showVoiceAssistant && (
+                <div className="fixed top-24 right-6 z-[60] animate-in fade-in slide-in-from-top-4 duration-300">
+                    <VoiceInput onActionComplete={() => setShowVoiceAssistant(false)} />
+                </div>
+            )}
         </nav>
     );
 };
