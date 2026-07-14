@@ -12,19 +12,31 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "/backend/api/$1"
+      "destination": {
+        "service": "backend",
+        "path": "/api/$1"
+      }
     },
     {
       "source": "/assets/(.*)",
-      "destination": "/frontend/assets/$1"
+      "destination": {
+        "service": "frontend",
+        "path": "/assets/$1"
+      }
     },
     {
       "source": "/((?!assets/|vite.svg|favicon.ico|api/).*)",
-      "destination": "/frontend/index.html"
+      "destination": {
+        "service": "frontend",
+        "path": "/index.html"
+      }
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/$1"
+      "destination": {
+        "service": "frontend",
+        "path": "/$1"
+      }
     }
   ]
 }
