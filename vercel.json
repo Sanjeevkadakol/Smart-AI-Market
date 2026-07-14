@@ -15,6 +15,14 @@
       "destination": "/backend/api/:path*"
     },
     {
+      "source": "/assets/:path*",
+      "destination": "/frontend/assets/:path*"
+    },
+    {
+      "source": "/:path((?!.*\\.).*)",
+      "destination": "/frontend/index.html"
+    },
+    {
       "source": "/:path*",
       "destination": "/frontend/:path*"
     }
